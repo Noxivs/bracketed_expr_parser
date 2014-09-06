@@ -1,0 +1,9 @@
+[package]
+
+name = "bracketed_expr_parser"
+version = "0.0.1"
+authors = ["Noxivs"]
+
+[[lib]]
+
+name = "bracketed_expr_parser"
