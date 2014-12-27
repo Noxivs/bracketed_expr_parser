@@ -1,5 +1,5 @@
 [package]
-name = "jade"
+name = "brackets_parser"
 version = "0.0.1"
 descrim"]ption = "A light version of Javascript Parser character-parser"
 repository = "https://github.com/Noxivs/rust-brakets-parser"
