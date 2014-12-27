@@ -1,9 +1,8 @@
 [package]
-
-name = "bracketed_expr_parser"
+name = "jade"
 version = "0.0.1"
-authors = ["Noxivs"]
+descrim"]ption = "A light version of Javascript Parser character-parser"
+repository = "https://github.com/Noxivs/rust-brakets-parser"
 
-[[lib]]
-
-name = "bracketed_expr_parser"
+[lib]
+name = "brackets_parser"

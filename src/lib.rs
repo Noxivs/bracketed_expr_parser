@@ -1,10 +1,15 @@
+#![crate_name = "brackets_parser"]
+
+#![crate_type = "dylib"]
+#![crate_type = "rlib"]
+
 pub fn parse(src: &str, start: uint) -> (uint, uint, String) {
     let mut index = start;
     let mut state = State::default_state();
 
     while state.round_depth >= 0 && state.curly_depth >= 0 && state.square_depth >= 0 {
         if index >= src.len() {
-            fail!("The end of the string was reached with no closing bracket found.");
+            panic!("The end of the string was reached with no closing bracket found.");
         }
 
         state = parse_char(src.char_at(index), state);
@@ -67,8 +72,10 @@ fn parse_char(c: char, mut state: State) -> State {
         state.square_depth -= 1;
     }
 
-    if !state.block_comment && !state.line_comment && !was_comment { 
-        state.history = String::from_char(1, c).append(state.history.as_slice()); 
+    if !state.block_comment && !state.line_comment && !was_comment {
+        let mut history = String::from_char(1, c);
+        history.push_str(state.history.as_slice());
+        state.history = history;
     }
 
     state.last_char = Some(c); 
@@ -120,47 +127,3 @@ impl State {
         }
     }
 }
-
-/*
-pub fn  is_punctuator(c: char) -> bool {
-  match c {
-    '.' |
-    '(' |
-    ')' |
-    ';' |
-    ',' |
-    '{' |
-    '}' |
-    '[' |
-    ']' |
-    ':' |
-    '?' |
-    '~' |
-    '%' |
-    '&' |
-    '*' |
-    '+' |
-    '-' |
-    '<' |
-    '>' |
-    '^' |
-    '|' |
-    '!' |
-    '='  => true,
-    _   => false
-  }
-}
-
-pub fn is_keyword(id: &str) -> bool {
-    (id == "if") || (id == "in") || (id == "do") || (id == "var") || (id == "for") || (id == "new") ||
-    (id == "try") || (id == "let") || (id == "this") || (id == "else") || (id == "case") ||
-    (id == "void") || (id == "with") || (id == "enum") || (id == "while") || (id == "break") || (id == "catch") ||
-    (id == "throw") || (id == "const") || (id == "yield") || (id == "class") || (id == "super") ||
-    (id == "return") || (id == "typeof") || (id == "delete") || (id == "switch") || (id == "export") ||
-    (id == "import") || (id == "default") || (id == "finally") || (id == "extends") || (id == "function") ||
-    (id == "continue") || (id == "debugger") || (id == "package") || (id == "private") || (id == "interface") ||
-    (id == "instanceof") || (id == "implements") || (id == "protected") || (id == "public") || (id == "static") ||
-    (id == "yield") || (id == "let")
-}
-
-*/
